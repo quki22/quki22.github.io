@@ -368,9 +368,11 @@
           button.dataset.zone = group.key;
           button.setAttribute('aria-label', 'Место ' + number + ', ' + group.label + ', демонстрационно свободно');
           button.innerHTML = '<span>' + number + '</span><small>' + group.short + '</small>';
-          button.addEventListener('click', function(){
-            selected.textContent = 'Место ' + number + ' · ' + group.label + ' · демонстрационно свободно';
-          });
+          button.addEventListener('click', (function(currentNumber, currentGroup){
+            return function(){
+              selected.textContent = 'Место ' + currentNumber + ' · ' + currentGroup.label + ' · демонстрационно свободно';
+            };
+          }(number, group)));
           target.appendChild(button);
         }
       });

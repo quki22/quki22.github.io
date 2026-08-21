@@ -69,16 +69,23 @@
     .bc-station:hover,.bc-station:focus{outline:none;transform:translateY(-2px);border-color:var(--bc-blue);background:rgba(47,155,255,.15)}
     .bc-station span{font-size:16px;font-weight:800;letter-spacing:-.05em}
     .bc-station small{display:flex;align-items:center;gap:4px;color:#91a5bc;font-size:8px;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
-    .bc-station small::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--bc-green)}
+    .bc-station small::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--bc-zone,var(--bc-green))}
+    .bc-station[data-zone="standard"]{--bc-zone:#44a4ff;border-top:2px solid #44a4ff}.bc-station[data-zone="standardplus"]{--bc-zone:#53d7d1;border-top:2px solid #53d7d1}.bc-station[data-zone="vip1"]{--bc-zone:#b889ff;border-top:2px solid #b889ff}.bc-station[data-zone="vip2"]{--bc-zone:#ffbd67;border-top:2px solid #ffbd67}
     .bc-station.is-hidden{display:none}
-    .bc-map-side{display:flex;flex-direction:column;justify-content:space-between;gap:20px;padding:27px;border:1px solid var(--bc-line);background:#111722}
+    .bc-map-side{display:flex;flex-direction:column;justify-content:flex-start;gap:25px;padding:27px;border:1px solid var(--bc-line);background:linear-gradient(155deg,#111d2f,#0d1420)}
     .bc-map-side h3{margin:0 0 13px;font-size:25px;line-height:1;letter-spacing:-.06em}
     .bc-map-side p{margin:0;color:var(--bc-muted);font-size:14px;line-height:1.55}
-    .bc-map-status{padding-top:20px;border-top:1px solid var(--bc-line)}
-    .bc-map-status span{display:flex;align-items:center;gap:9px;margin-bottom:10px;color:#cbd8e7;font-size:12px;font-weight:700}
-    .bc-map-status i{width:8px;height:8px;border-radius:50%;background:var(--bc-green)}
-    .bc-map-selected{min-height:49px;margin-top:14px;padding:13px;border:1px solid rgba(126,197,255,.24);background:rgba(47,155,255,.08);color:#d7e8fa;font-size:12px;line-height:1.35}
-    .bc-map-note{color:#7e90a7!important;font-size:11px!important}
+    .bc-map-selection{margin-top:21px;padding:17px;border:1px solid rgba(126,197,255,.28);background:linear-gradient(135deg,rgba(47,155,255,.14),rgba(47,155,255,.035))}
+    .bc-map-selection > span{display:block;margin-bottom:8px;color:#8ebce9;font-size:10px;font-weight:800;letter-spacing:.11em;text-transform:uppercase}
+    .bc-map-selection strong{display:block;margin-bottom:5px;color:#f4f8ff;font-size:28px;line-height:1;letter-spacing:-.06em}
+    .bc-map-selection p{color:#bdd0e5;font-size:12px}
+    .bc-zone-legend{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+    .bc-zone-legend div{position:relative;min-height:63px;padding:12px;border:1px solid var(--bc-line);background:rgba(5,10,17,.36)}
+    .bc-zone-legend div::before{content:"";position:absolute;left:12px;top:12px;width:5px;height:5px;border-radius:50%;background:var(--bc-zone)}
+    .bc-zone-legend div[data-zone="standard"]{--bc-zone:#44a4ff}.bc-zone-legend div[data-zone="standardplus"]{--bc-zone:#53d7d1}.bc-zone-legend div[data-zone="vip1"]{--bc-zone:#b889ff}.bc-zone-legend div[data-zone="vip2"]{--bc-zone:#ffbd67}
+    .bc-zone-legend span{display:block;margin-left:11px;color:#dceafa;font-size:12px;font-weight:700}
+    .bc-zone-legend strong{display:block;margin-top:7px;color:#899bb1;font-size:10px;letter-spacing:.06em}
+    .bc-map-note{padding-top:17px;border-top:1px solid var(--bc-line);color:#7e90a7!important;font-size:11px!important}
     .bc-journey{display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid var(--bc-line);border-left:1px solid var(--bc-line)}
     .bc-journey article{min-height:205px;padding:22px;border-right:1px solid var(--bc-line);border-bottom:1px solid var(--bc-line);background:rgba(17,23,34,.36)}
     .bc-journey span{display:block;margin-bottom:61px;color:var(--bc-blue);font-size:12px;font-weight:800}
@@ -98,7 +105,7 @@
     .bc-specs dd{margin:0;color:#dde7f4;font-size:13px;line-height:1.38}
     .bc-mobile{display:grid;grid-template-columns:.65fr 1.35fr;gap:clamp(30px,7vw,100px);align-items:center}
     .bc-phone{width:min(285px,100%);margin:0 auto;padding:9px;border:1px solid rgba(126,197,255,.5);border-radius:31px;background:#05080e;box-shadow:0 20px 55px rgba(0,0,0,.4)}
-    .bc-phone-screen{overflow:hidden;aspect-ratio:9/17.5;border-radius:22px;background:#0a0e17}
+    .bc-phone-screen{overflow:hidden;aspect-ratio:390/844;border-radius:22px;background:#0a0e17}
     .bc-phone img{width:100%;height:100%;object-fit:contain}
     .bc-mobile-copy h2{max-width:550px}
     .bc-mobile-copy p{max-width:600px;margin:20px 0 0;color:var(--bc-muted);font-size:18px;line-height:1.55}
@@ -253,8 +260,18 @@
               <div id="bc-stations" class="bc-stations" aria-label="Схема 48 игровых мест"></div>
             </div>
             <aside class="bc-map-side">
-              <div><h3>Понятная схема зала</h3><p>Категория, номер и отдельная карточка места помогают быстрее подобрать нужную игровую зону.</p><div id="bc-map-selected" class="bc-map-selected">Выберите место на карте.</div></div>
-              <div class="bc-map-status"><span><i></i>Свободно — стартовое демо-состояние</span><p class="bc-map-note">В опубликованной версии статусы демонстрационные и сохраняются в localStorage. Карта не заявлена как real-time система.</p></div>
+              <div>
+                <h3>Выберите место</h3>
+                <p>Кликните на номер, чтобы увидеть игровую зону. Фильтры помогают быстро сузить выбор.</p>
+                <div class="bc-map-selection"><span>Выбранное место</span><strong id="bc-map-selected">ПК —</strong><p id="bc-map-selected-copy">Нажмите на карточку на карте.</p></div>
+              </div>
+              <div class="bc-zone-legend" aria-label="Легенда игровых зон">
+                <div data-zone="standard"><span>Standart</span><strong>01–20</strong></div>
+                <div data-zone="standardplus"><span>Standart+</span><strong>21–40</strong></div>
+                <div data-zone="vip1"><span>VIP 1</span><strong>41–45</strong></div>
+                <div data-zone="vip2"><span>VIP 2</span><strong>46–48</strong></div>
+              </div>
+              <p class="bc-map-note">Демо-карта показывает структуру зала. Live-статусы не подключены.</p>
             </aside>
           </div>
         </div>
@@ -309,7 +326,7 @@
 
       <section class="bc-section">
         <div class="bc-wrap bc-mobile">
-          <div class="bc-phone"><div class="bc-phone-screen"><img src="/work/bootcamp/assets/bootcamp-map.png" alt="Экран карты BOOTCAMP"></div></div>
+          <div class="bc-phone"><div class="bc-phone-screen"><img src="/work/bootcamp/assets/bootcamp-map-mobile.png" alt="Мобильный экран карты BOOTCAMP"></div></div>
           <div class="bc-mobile-copy"><p class="bc-index">07 — MOBILE EXPERIENCE</p><h2>Клуб в смартфоне.</h2><p>Сайт адаптирован для небольших экранов: навигация, тарифы, карточки оборудования и карта игровых мест перестраиваются без потери визуальной иерархии.</p><div class="bc-mobile-points"><span>Компактная карта 48 мест</span><span>Тарифы и зоны без горизонтальной прокрутки</span><span>Быстрый доступ к контакту и бронированию</span><span>Сохранённый игровой характер интерфейса</span></div></div>
         </div>
       </section>
@@ -360,6 +377,7 @@
       ];
       var target = document.getElementById('bc-stations');
       var selected = document.getElementById('bc-map-selected');
+      var selectedCopy = document.getElementById('bc-map-selected-copy');
       groups.forEach(function(group){
         for(var number = group.from; number <= group.to; number += 1){
           var button = document.createElement('button');
@@ -370,7 +388,8 @@
           button.innerHTML = '<span>' + number + '</span><small>' + group.short + '</small>';
           button.addEventListener('click', (function(currentNumber, currentGroup){
             return function(){
-              selected.textContent = 'Место ' + currentNumber + ' · ' + currentGroup.label + ' · демонстрационно свободно';
+              selected.textContent = 'ПК ' + currentNumber;
+              selectedCopy.textContent = currentGroup.label + ' · стартовое демо-состояние';
             };
           }(number, group)));
           target.appendChild(button);
@@ -387,7 +406,8 @@
           Array.prototype.forEach.call(document.querySelectorAll('.bc-station'), function(station){
             station.classList.toggle('is-hidden', zone !== 'all' && station.dataset.zone !== zone);
           });
-          selected.textContent = zone === 'all' ? 'Показаны все 48 игровых мест.' : 'Показана зона ' + filter.textContent + '. Выберите место на карте.';
+          selected.textContent = zone === 'all' ? 'ПК —' : filter.textContent;
+          selectedCopy.textContent = zone === 'all' ? 'Показаны все 48 игровых мест.' : 'Показана зона ' + filter.textContent + '. Выберите место.';
         });
       });
       var menuButton = document.querySelector('.menu-button');

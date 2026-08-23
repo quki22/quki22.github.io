@@ -43,9 +43,9 @@
     var value=function(key,fallback){return (data.get(key)||'').trim()||fallback;};
     var message='Здравствуйте! Хочу обсудить проект.\n\nИмя / компания: '+value('name','не указано')+'\nЗадача: '+value('service','не указано')+'\nБюджет: '+value('budget','не указан')+'\nСрок: '+value('deadline','не указан')+'\nОписание: '+value('details','не указано');
     var status=document.getElementById('tw-brief-status');
-    var finish=function(){status.textContent='Бриф скопирован. Вставьте его в открывшемся Telegram.';window.open('https://t.me/qquki1','_blank','noopener');};
-    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(message).then(finish).catch(function(){status.textContent='Не удалось скопировать автоматически. Откроем Telegram — отправьте задачу вручную.';window.open('https://t.me/qquki1','_blank','noopener');});}
-    else{status.textContent='Откроем Telegram — отправьте задачу вручную.';window.open('https://t.me/qquki1','_blank','noopener');}
+    window.open('https://t.me/qquki1','_blank','noopener');
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(message).then(function(){status.textContent='Бриф скопирован. Вставьте его в открывшемся Telegram.';}).catch(function(){status.textContent='Не удалось скопировать автоматически. Вставьте описание задачи в Telegram вручную.';});}
+    else{status.textContent='Вставьте описание задачи в Telegram вручную.';}
   });
 }());
 </script></body></html>
